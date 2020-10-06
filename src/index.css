@@ -1,0 +1,14 @@
+/* section{
+    display: flex;
+    flex-flow: column;
+} */
+
+section > div{
+    display: flex;
+    align-items: center;
+    /* background-color: blue; */
+}
+
+section > div > p{
+    margin-right: 30px;
+}

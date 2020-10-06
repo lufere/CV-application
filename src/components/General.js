@@ -58,17 +58,17 @@ class General extends Component{
         }else{
             return(
                 <section>
+                    <h2>General Information: </h2>
                     <div>
-                        <h2>General Information: </h2>
-                        <h3>Name</h3>
+                        <h3>Name: </h3>
                             <p>
                                 {this.props.name}                            
                             </p>
-                        <h3>Email</h3>
+                        <h3>Email: </h3>
                             <p>
                                 {this.props.email}
                             </p>
-                        <h3>Phone</h3>
+                        <h3>Phone: </h3>
                             <p>
                                 {this.props.phone}
                             </p>

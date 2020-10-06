@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import General from './components/General'
-// import Education from './components/Education'
+import Education from './components/Education'
 // import Experience from './components/Experience'
 
 class App extends Component{
@@ -11,10 +11,16 @@ class App extends Component{
       email: "",
       phone: "",
       editGeneral: true,
+      schoolName: "",
+      studyTitle: "",
+      studyStart: "",
+      studyEnd: "",
+      education: [{name:"ITH", title: "Mechatronics", start: "2013-07-08", end: "2017-12-15"}],
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGeneralSubmit = this.handleGeneralSubmit.bind(this);
+    this.handleEducationSubmit = this.handleEducationSubmit.bind(this);
   }
 
   handleChange(event){
@@ -27,10 +33,22 @@ class App extends Component{
     });
   }
 
-  handleSubmit(event){
+  handleGeneralSubmit(event){
     this.setState({
       editGeneral: !this.state.editGeneral,
     });
+  }
+
+  handleEducationSubmit(){
+    let newEducation = this.state.education;
+    this.setState({
+      education: newEducation.concat([{
+        name: this.state.schoolName,
+        title: this.state.studyTitle,
+        start: this.state.studyStart,
+        end: this.state.studyEnd,
+      }]),
+    },()=>console.log(this.state.education));
   }
 
   render(){
@@ -42,10 +60,18 @@ class App extends Component{
           name = {this.state.name}
           email = {this.state.email}
           phone = {this.state.phone}
-          submit = {this.handleSubmit}
+          submit = {this.handleGeneralSubmit}
         />
-        {/* <Education/>
-        <Experience/> */}
+        <Education
+          onChange = {this.handleChange}
+          schoolName = {this.schoolName}
+          studyTitle = {this.studyTitle}
+          studyStart = {this.studyStart}
+          studyEnd = {this.studyEnd}
+          education = {this.state.education}
+          submit = {this.handleEducationSubmit}
+        />
+        {/* <Experience/> */}
       </div>
     );
   }
