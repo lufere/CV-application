@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import General from './components/General'
 import Education from './components/Education'
-// import Experience from './components/Experience'
+import Experience from './components/Experience'
 
 class App extends Component{
   constructor(props){
@@ -17,6 +17,13 @@ class App extends Component{
       studyEnd: "",
       education: [{name:"ITH", title: "Mechatronics", start: "2013-07-08", end: "2017-12-15"}],
       educationIndex: null,
+      companyName: "",
+      position: "",
+      tasks: "",
+      workStart: "",
+      workEnd: "",
+      experience: [{company: "F. Electronics", position: "Engineer", tasks: "Engineering stuff", start: "2013-07-08", end: "2017-12-15"}],
+      experienceIndex: null,
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +32,7 @@ class App extends Component{
     this.educationEdit = this.educationEdit.bind(this);
     this.educationEditSubmit = this.educationEditSubmit.bind(this);
     this.educationDelete = this.educationDelete.bind(this);
+    this.handleExperienceSubmit = this.handleExperienceSubmit.bind(this);
   }
 
   handleChange(event){
@@ -44,7 +52,7 @@ class App extends Component{
   }
 
   handleEducationSubmit(){
-    let newEducation = this.state.education;
+    const newEducation = this.state.education;
     this.setState({
       education: newEducation.concat([{
         name: this.state.schoolName,
@@ -101,6 +109,24 @@ class App extends Component{
     });
   }
 
+  handleExperienceSubmit(){
+    const newExperience = this.state.experience;
+    this.setState({
+        experience: newExperience.concat([{
+        company: this.state.companyName,
+        position: this.state.position,
+        tasks: this.state.tasks,
+        start: this.state.workStart,
+        end: this.state.workEnd,
+      }]),
+      companyName: "",
+      position:"",
+      tasks: "",
+      workStart:"",
+      workEnd:"",
+    });
+  }
+
   render(){
     return (
       <div>
@@ -125,7 +151,16 @@ class App extends Component{
           editSubmit = {this.educationEditSubmit}
           delete = {this.educationDelete}
         />
-        {/* <Experience/> */}
+        <Experience
+          onChange = {this.handleChange}
+          companyName = {this.state.companyName}
+          position = {this.state.position}
+          tasks = {this.state.tasks}
+          workStart = {this.state.workStart}
+          workEnd = {this.state.workEnd}
+          experience = {this.state.experience}
+          submit = {this.handleExperienceSubmit}
+        />
       </div>
     );
   }
