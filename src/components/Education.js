@@ -77,6 +77,9 @@ class Education extends Component{
             <section>
                 <form>
                     <h2>Education</h2>
+                    <ul>
+                        {educationList}
+                    </ul>
                         <label>School Name: 
                             <input
                                 type = "text" 
@@ -115,12 +118,9 @@ class Education extends Component{
                             onClick = {this.props.submit}
                         />
                 </form>
-                <ul>
-                    {educationList}
-                </ul>
             </section>
 		);
-	}else{ 
+	}else{
         return(
             <section>
                 <form>

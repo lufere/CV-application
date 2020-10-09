@@ -33,6 +33,9 @@ class App extends Component{
     this.educationEditSubmit = this.educationEditSubmit.bind(this);
     this.educationDelete = this.educationDelete.bind(this);
     this.handleExperienceSubmit = this.handleExperienceSubmit.bind(this);
+    this.experienceEdit = this.experienceEdit.bind(this);
+    this.experienceEditSubmit = this.experienceEditSubmit.bind(this);
+    this.experienceDelete = this.experienceDelete.bind(this);
   }
 
   handleChange(event){
@@ -127,6 +130,51 @@ class App extends Component{
     });
   }
 
+  experienceEdit(event){
+    let index = parseInt(event.target.parentElement.id);
+    let target = this.state.experience[index];
+    this.setState({
+      experienceIndex: index,
+      companyName: target.company,
+      position: target.position,
+      tasks: target.tasks,
+      workStart: target.start,
+      workEnd: target.end,
+    });
+  }
+
+  experienceEditSubmit(event){
+    let index = parseInt(event.target.parentElement.id);
+    const newExperience = this.state.experience;
+    const editedWork = {
+      company: this.state.companyName,
+      position: this.state.position,
+      tasks: this.state.tasks,
+      start: this.state.workStart,
+      end: this.state.workEnd,
+    }
+    newExperience.splice(index,1,editedWork)
+    // console.log(newEducation);
+    this.setState({
+      experience: newExperience,
+      companyName: "",
+      position:"",
+      tasks:"",
+      workStart:"",
+      workEnd:"",
+      experienceIndex: null,
+    });
+  }
+
+  experienceDelete(event){
+    let index = parseInt(event.target.parentElement.id);
+    const newExperience = this.state.experience;
+    newExperience.splice(index,1);
+    this.setState({
+      experience: newExperience,
+    });
+  }
+
   render(){
     return (
       <div>
@@ -160,6 +208,10 @@ class App extends Component{
           workEnd = {this.state.workEnd}
           experience = {this.state.experience}
           submit = {this.handleExperienceSubmit}
+          edit = {this.experienceEdit}
+          editIndex = {this.state.experienceIndex}
+          editSubmit = {this.experienceEditSubmit}
+          delete = {this.experienceDelete}
         />
       </div>
     );
