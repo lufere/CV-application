@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import EditButton from "./EditButton";
 
 class Experience extends Component{
     constructor(props){
@@ -55,10 +56,11 @@ class Experience extends Component{
                                 onChange = {this.handleChange}
                             />
                         </label>
-                        <input
+                        <EditButton
                             type = "button"
                             value = "SUBMIT"
                             onClick = {this.props.editSubmit}
+                            finished = {this.props.finished}
                         />
                 </div>
                 );
@@ -74,14 +76,24 @@ class Experience extends Component{
                         End Date: ${work.end} `
                         }
                     </p>
-                    <button onClick = {this.props.edit}>EDIT</button>
-                    <button onClick = {this.props.delete}>DELETE</button>
+                    <EditButton 
+                        onClick = {this.props.edit}
+                        value = "EDIT"
+                        type = "button"
+                        finished = {this.props.finished}
+                    />
+                    <EditButton 
+                        onClick = {this.props.delete}
+                        value = "DELETE"
+                        type = "button"
+                        finished = {this.props.finished}
+                    />
                 </li>
                 // <li>{school.name+", "+school.title}</li>
             );
         })
         
-        if(this.props.editIndex === null){
+        if(this.props.editIndex === null && !this.props.finished){
             return(
                 <section>
                 <form>

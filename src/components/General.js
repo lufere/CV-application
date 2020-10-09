@@ -47,11 +47,6 @@ class General extends Component{
                                 onChange = {this.handleChange}
                             />
                         </label>
-                        <input
-                            type = "button"
-                            value = "SUBMIT"
-                            onClick = {this.props.submit}
-                        />
                     </form>
                 </section>
             );
@@ -72,11 +67,6 @@ class General extends Component{
                             <p>
                                 {this.props.phone}
                             </p>
-                        <input
-                            type = "button"
-                            value = "EDIT"
-                            onClick = {this.props.submit}
-                        />
                     </div>
                 </section>
             );

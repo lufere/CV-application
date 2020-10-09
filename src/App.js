@@ -24,10 +24,11 @@ class App extends Component{
       workEnd: "",
       experience: [{company: "F. Electronics", position: "Engineer", tasks: "Engineering stuff", start: "2013-07-08", end: "2017-12-15"}],
       experienceIndex: null,
+      finished: false,
+      finishedStatus: "FINISH EDITING",
     }
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleGeneralSubmit = this.handleGeneralSubmit.bind(this);
     this.handleEducationSubmit = this.handleEducationSubmit.bind(this);
     this.educationEdit = this.educationEdit.bind(this);
     this.educationEditSubmit = this.educationEditSubmit.bind(this);
@@ -36,6 +37,7 @@ class App extends Component{
     this.experienceEdit = this.experienceEdit.bind(this);
     this.experienceEditSubmit = this.experienceEditSubmit.bind(this);
     this.experienceDelete = this.experienceDelete.bind(this);
+    this.finishToggle = this.finishToggle.bind(this);
   }
 
   handleChange(event){
@@ -45,12 +47,6 @@ class App extends Component{
 
     this.setState({
       [name]: value,
-    });
-  }
-
-  handleGeneralSubmit(event){
-    this.setState({
-      editGeneral: !this.state.editGeneral,
     });
   }
 
@@ -175,6 +171,30 @@ class App extends Component{
     });
   }
 
+  finishToggle(){
+    if(this.state.finishedStatus === "FINISH EDITING")this.setState({
+      finished: !this.state.finished,
+      finishedStatus: "EDIT CV",
+      editGeneral: false,
+      experienceIndex: null,
+      educationIndex: null,
+      schoolName: "",
+      studyTitle:"",
+      studyStart:"",
+      studyEnd:"",
+      companyName: "",
+      position:"",
+      tasks:"",
+      workStart:"",
+      workEnd:"",
+    })
+    if(this.state.finishedStatus === "EDIT CV")this.setState({
+      finished: !this.state.finished,
+      finishedStatus: "FINISH EDITING",
+      editGeneral: true,
+    })
+  }
+
   render(){
     return (
       <div>
@@ -184,7 +204,6 @@ class App extends Component{
           name = {this.state.name}
           email = {this.state.email}
           phone = {this.state.phone}
-          submit = {this.handleGeneralSubmit}
         />
         <Education
           onChange = {this.handleChange}
@@ -198,6 +217,7 @@ class App extends Component{
           editIndex = {this.state.educationIndex}
           editSubmit = {this.educationEditSubmit}
           delete = {this.educationDelete}
+          finished = {this.state.finished}
         />
         <Experience
           onChange = {this.handleChange}
@@ -212,6 +232,13 @@ class App extends Component{
           editIndex = {this.state.experienceIndex}
           editSubmit = {this.experienceEditSubmit}
           delete = {this.experienceDelete}
+          finished = {this.state.finished}
+        />
+        <input
+          type = "button"
+          value = {this.state.finishedStatus}
+          className = "finishEdit"
+          onClick = {this.finishToggle}
         />
       </div>
     );
