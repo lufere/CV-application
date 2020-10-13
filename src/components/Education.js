@@ -1,90 +1,84 @@
-import React, { Component } from "react";
+import React from "react";
 import EditButton from "./EditButton";
 
-class Education extends Component{
-    constructor(props){
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
+const Education = props => {
+    function handleChange(event){
+        props.onChange(event);
     }
 
-    handleChange(event){
-        this.props.onChange(event);
-    }
-
-    render(){
-        let educationList = this.props.education.map((school, i)=>{
-		// console.log(this.props.editIndex);
+    let educationList = props.education.map((school, i)=>{
+		// console.log(props.editIndex);
 		// console.log(i);
-			if(this.props.editIndex === i){
-				return(
-					<div key = {school.name+school.title} id = {i}>
-                        <label>School Name: 
-                            <input
-                                type = "text" 
-                                name = "schoolName"
-                                value = {this.props.schoolName}
-                                onChange = {this.handleChange}
-                            />
-                        </label>
-                        <label>Title: 
-                            <input
-                                type = "text" 
-                                name = "studyTitle"
-                                value = {this.props.studyTitle}
-                                onChange = {this.handleChange}
-                            />
-                        </label>
-                        <label>Start Date: 
-                            <input
-                                type = "date" 
-                                name = "studyStart"
-                                value = {this.props.studyStart}
-                                onChange = {this.handleChange}
-                            />
-                        </label>
-                        <label>End Date: 
-                            <input 
-                                type = "date" 
-                                name = "studyEnd"
-                                value = {this.props.studyEnd}
-                                onChange = {this.handleChange}
-                            />
-                        </label>
-                        <EditButton
-                            type = "button"
-                            value = "SUBMIT"
-                            onClick = {this.props.editSubmit}
-                            finished = {this.props.finished}
+        if(props.editIndex === i){
+            return(
+                <div key = {school.name+school.title} id = {i}>
+                    <label>School Name: 
+                        <input
+                            type = "text" 
+                            name = "schoolName"
+                            value = {props.schoolName}
+                            onChange = {handleChange}
                         />
-                </div>
-				);
-			}else{
-				return(
-					<li key = {school.name+school.title} id = {i}>
-						<p>
-							{`Institution: ${school.name}, 
-							Title: ${school.title}, 
-							Start Date: ${school.start}
-							End Date: ${school.end} `}
-						</p>
-						<EditButton
-                            type = "button"
-                            onClick = {this.props.edit} 
-                            value = "EDIT"
-                            finished = {this.props.finished}
+                    </label>
+                    <label>Title: 
+                        <input
+                            type = "text" 
+                            name = "studyTitle"
+                            value = {props.studyTitle}
+                            onChange = {handleChange}
                         />
-						<EditButton
-                            type = "button"
-                            onClick = {this.props.delete}
-                            value = "DELETE"
-                            finished = {this.props.finished}
-                            />
-					</li>
-					// <li>{school.name+", "+school.title}</li>
-				);
-			}
-		})
-        if(this.props.editIndex === null && !this.props.finished){
+                    </label>
+                    <label>Start Date: 
+                        <input
+                            type = "date" 
+                            name = "studyStart"
+                            value = {props.studyStart}
+                            onChange = {handleChange}
+                        />
+                    </label>
+                    <label>End Date: 
+                        <input 
+                            type = "date" 
+                            name = "studyEnd"
+                            value = {props.studyEnd}
+                            onChange = {handleChange}
+                        />
+                    </label>
+                    <EditButton
+                        type = "button"
+                        value = "SUBMIT"
+                        onClick = {props.editSubmit}
+                        finished = {props.finished}
+                    />
+            </div>
+            );
+        }else{
+            return(
+                <li key = {school.name+school.title} id = {i}>
+                    <p>
+                        {`Institution: ${school.name}, 
+                        Title: ${school.title}, 
+                        Start Date: ${school.start}
+                        End Date: ${school.end} `}
+                    </p>
+                    <EditButton
+                        type = "button"
+                        onClick = {props.edit} 
+                        value = "EDIT"
+                        finished = {props.finished}
+                    />
+                    <EditButton
+                        type = "button"
+                        onClick = {props.delete}
+                        value = "DELETE"
+                        finished = {props.finished}
+                        />
+                </li>
+                // <li>{school.name+", "+school.title}</li>
+            );
+        }
+    })
+    if(props.editIndex === null && !props.finished){
         return(
             <section>
                 <form>
@@ -96,39 +90,39 @@ class Education extends Component{
                             <input
                                 type = "text" 
                                 name = "schoolName"
-                                value = {this.props.schoolName}
-                                onChange = {this.handleChange}
+                                value = {props.schoolName}
+                                onChange = {handleChange}
                             />
                         </label>
                         <label>Title: 
                             <input
                                 type = "text" 
                                 name = "studyTitle"
-                                value = {this.props.studyTitle}
-                                onChange = {this.handleChange}
+                                value = {props.studyTitle}
+                                onChange = {handleChange}
                             />
                         </label>
                         <label>Start Date: 
                             <input
                                 type = "date" 
                                 name = "studyStart"
-                                value = {this.props.studyStart}
-                                onChange = {this.handleChange}
+                                value = {props.studyStart}
+                                onChange = {handleChange}
                             />
                         </label>
                         <label>End Date: 
                             <input 
                                 type = "date" 
                                 name = "studyEnd"
-                                value = {this.props.studyEnd}
-                                onChange = {this.handleChange}
+                                value = {props.studyEnd}
+                                onChange = {handleChange}
                             />
                         </label>
                         <EditButton
                             type = "button"
                             value = "SUBMIT"
-                            onClick = {this.props.submit}
-                            finished = {this.props.finished}
+                            onClick = {props.submit}
+                            finished = {props.finished}
                         />
                 </form>
             </section>
@@ -144,7 +138,6 @@ class Education extends Component{
                 </form>
             </section>
         );
-    }
     }
 }
 

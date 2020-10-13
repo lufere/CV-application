@@ -1,248 +1,230 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import General from './components/General'
 import Education from './components/Education'
 import Experience from './components/Experience'
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      name: "",
-      email: "",
-      phone: "",
-      editGeneral: true,
-      schoolName: "",
-      studyTitle: "",
-      studyStart: "",
-      studyEnd: "",
-      education: [{name:"ITH", title: "Mechatronics", start: "2013-07-08", end: "2017-12-15"}],
-      educationIndex: null,
-      companyName: "",
-      position: "",
-      tasks: "",
-      workStart: "",
-      workEnd: "",
-      experience: [{company: "F. Electronics", position: "Engineer", tasks: "Engineering stuff", start: "2013-07-08", end: "2017-12-15"}],
-      experienceIndex: null,
-      finished: false,
-      finishedStatus: "FINISH EDITING",
-    }
+// class App extends Component{
+const App = props =>{
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [editGeneral, setEditGeneral] = useState(true);
+  const [schoolName, setSchoolName] = useState("");
+  const [studyTitle, setStudyTitle] = useState("");
+  const [studyStart, setStudyStart] = useState("");
+  const [studyEnd, setStudyEnd] = useState("");
+  const [education, setEducation] = useState([{name:"ITH", title: "Mechatronics", start: "2013-07-08", end: "2017-12-15"}]);
+  const [educationIndex, setEducationIndex] = useState(null);
+  const [companyName, setCompanyName] = useState("");
+  const [position, setPosition] = useState("");
+  const [tasks, setTasks] = useState("");
+  const [workStart, setWorkStart] = useState("");
+  const [workEnd, setWorkEnd] = useState("");
+  const [experience, setExperience] = useState([{company: "F. Electronics", position: "Engineer", tasks: "Engineering stuff", start: "2013-07-08", end: "2017-12-15"}]);
+  const [experienceIndex, setExperienceIndex] = useState(null);
+  const [finished, setFinished] = useState(false);
+  const [finishedStatus, setFinishedStatus] = useState("FINISH EDITING");
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleEducationSubmit = this.handleEducationSubmit.bind(this);
-    this.educationEdit = this.educationEdit.bind(this);
-    this.educationEditSubmit = this.educationEditSubmit.bind(this);
-    this.educationDelete = this.educationDelete.bind(this);
-    this.handleExperienceSubmit = this.handleExperienceSubmit.bind(this);
-    this.experienceEdit = this.experienceEdit.bind(this);
-    this.experienceEditSubmit = this.experienceEditSubmit.bind(this);
-    this.experienceDelete = this.experienceDelete.bind(this);
-    this.finishToggle = this.finishToggle.bind(this);
-  }
-
-  handleChange(event){
+  function handleChange(event){
     const target = event.target;
     const name = target.name;
     const value = target.type === 'checkbox'? target.checked : target.value;
 
-    this.setState({
-      [name]: value,
-    });
+    if (name === 'name') setName(value);
+    if (name === 'email') setEmail(value);
+    if (name === 'phone') setPhone(value);
+    if (name === 'schoolName')setSchoolName(value);
+    if (name === 'studyTitle')setStudyTitle(value);
+    if (name === 'studyStart')setStudyStart(value);
+    if (name === 'studyEnd')setStudyEnd(value);
+    if (name === 'companyName')setCompanyName(value);
+    if (name === 'position')setPosition(value);
+    if (name === 'tasks')setTasks(value);
+    if (name === 'workStart')setWorkStart(value);
+    if (name === 'workEnd')setWorkEnd(value);
+    // this.setState({
+    //   [name]: value,
+    // });
   }
 
-  handleEducationSubmit(){
-    const newEducation = this.state.education;
-    this.setState({
-      education: newEducation.concat([{
-        name: this.state.schoolName,
-        title: this.state.studyTitle,
-        start: this.state.studyStart,
-        end: this.state.studyEnd,
-      }]),
-      schoolName: "",
-      studyTitle:"",
-      studyStart:"",
-      studyEnd:"",
-    });
+  function handleEducationSubmit(){
+    const newEducation = education;
+    setEducation(newEducation.concat([{
+      name: schoolName,
+      title: studyTitle,
+      start: studyStart,
+      end: studyEnd,
+    }]));
+    setSchoolName('');
+    setStudyTitle('');
+    setStudyStart('');
+    setStudyEnd('');
   }
 
-  educationEdit(event){
+  function educationEdit(event){
     let index = parseInt(event.target.parentElement.id);
-    let target = this.state.education[index];
-    this.setState({
-      educationIndex: index,
-      schoolName: target.name,
-      studyTitle: target.title,
-      studyStart: target.start,
-      studyEnd: target.end,
-    });
+    let target = education[index];
+    setEducationIndex(index);
+    setSchoolName(target.name);
+    setStudyTitle(target.title);
+    setStudyStart(target.start);
+    setStudyEnd(target.end);
   }
 
-  educationEditSubmit(event){
+  function educationEditSubmit(event){
     let index = parseInt(event.target.parentElement.id);
-    const newEducation = this.state.education;
+    const newEducation = [...education];
     const editedSchool = {
-      name: this.state.schoolName,
-      title: this.state.studyTitle,
-      start: this.state.studyStart,
-      end: this.state.studyEnd,
+      name: schoolName,
+      title: studyTitle,
+      start: studyStart,
+      end: studyEnd,
     }
     newEducation.splice(index,1,editedSchool)
     // console.log(newEducation);
-    this.setState({
-      education: newEducation,
-      schoolName: "",
-      studyTitle:"",
-      studyStart:"",
-      studyEnd:"",
-      educationIndex: null,
-    });
+    setEducation(newEducation);
+    setSchoolName('');
+    setStudyTitle('');
+    setStudyStart('');
+    setStudyEnd('');
+    setEducationIndex(null);
   }
 
-  educationDelete(event){
+  function educationDelete(event){
+    console.log(editGeneral);
     let index = parseInt(event.target.parentElement.id);
-    const newEducation = this.state.education;
+    const newEducation = [...education];
     newEducation.splice(index,1);
-    this.setState({
-      education: newEducation,
-    });
+    console.log(newEducation);
+    setEducation(newEducation);
   }
 
-  handleExperienceSubmit(){
-    const newExperience = this.state.experience;
-    this.setState({
-        experience: newExperience.concat([{
-        company: this.state.companyName,
-        position: this.state.position,
-        tasks: this.state.tasks,
-        start: this.state.workStart,
-        end: this.state.workEnd,
-      }]),
-      companyName: "",
-      position:"",
-      tasks: "",
-      workStart:"",
-      workEnd:"",
-    });
+  function handleExperienceSubmit(){
+    const newExperience = experience;
+    setExperience(newExperience.concat([{
+      company: companyName,
+      position: position,
+      tasks: tasks,
+      start: workStart,
+      end: workEnd,
+    }]));
+    setCompanyName('');
+    setPosition('');
+    setTasks('');
+    setWorkStart('');
+    setWorkEnd('');
   }
 
-  experienceEdit(event){
+  function experienceEdit(event){
     let index = parseInt(event.target.parentElement.id);
-    let target = this.state.experience[index];
-    this.setState({
-      experienceIndex: index,
-      companyName: target.company,
-      position: target.position,
-      tasks: target.tasks,
-      workStart: target.start,
-      workEnd: target.end,
-    });
+    let target = experience[index];
+    setExperienceIndex(index);
+    setCompanyName(target.company);
+    setPosition(target.position);
+    setTasks(target.tasks);
+    setWorkStart(target.workStart);
+    setWorkEnd(target.workEnd);
   }
 
-  experienceEditSubmit(event){
+  function experienceEditSubmit(event){
     let index = parseInt(event.target.parentElement.id);
-    const newExperience = this.state.experience;
+    const newExperience = [...experience];
     const editedWork = {
-      company: this.state.companyName,
-      position: this.state.position,
-      tasks: this.state.tasks,
-      start: this.state.workStart,
-      end: this.state.workEnd,
+      company: companyName,
+      position: position,
+      tasks: tasks,
+      start: workStart,
+      end: workEnd,
     }
     newExperience.splice(index,1,editedWork)
     // console.log(newEducation);
-    this.setState({
-      experience: newExperience,
-      companyName: "",
-      position:"",
-      tasks:"",
-      workStart:"",
-      workEnd:"",
-      experienceIndex: null,
-    });
+    setExperience(newExperience);
+    setCompanyName('');
+    setPosition('');
+    setTasks('');
+    setWorkStart('');
+    setWorkEnd('');
+    setExperienceIndex(null);
   }
 
-  experienceDelete(event){
+  function experienceDelete(event){
     let index = parseInt(event.target.parentElement.id);
-    const newExperience = this.state.experience;
+    const newExperience = [...experience];
     newExperience.splice(index,1);
-    this.setState({
-      experience: newExperience,
-    });
+    setExperience(newExperience);
   }
 
-  finishToggle(){
-    if(this.state.finishedStatus === "FINISH EDITING")this.setState({
-      finished: !this.state.finished,
-      finishedStatus: "EDIT CV",
-      editGeneral: false,
-      experienceIndex: null,
-      educationIndex: null,
-      schoolName: "",
-      studyTitle:"",
-      studyStart:"",
-      studyEnd:"",
-      companyName: "",
-      position:"",
-      tasks:"",
-      workStart:"",
-      workEnd:"",
-    })
-    if(this.state.finishedStatus === "EDIT CV")this.setState({
-      finished: !this.state.finished,
-      finishedStatus: "FINISH EDITING",
-      editGeneral: true,
-    })
+  function finishToggle(){
+    console.log(finishedStatus);
+    if(finishedStatus === "FINISH EDITING"){
+      setFinished(!finished);
+      setFinishedStatus('EDIT CV');
+      setEditGeneral(false);
+      setExperienceIndex(null);
+      setEducationIndex(null);
+      setSchoolName('');
+      setStudyTitle('');
+      setStudyStart('');
+      setStudyEnd('');
+      setCompanyName('');
+      setPosition('');
+      setTasks('');
+      setWorkStart('');
+      setWorkEnd('');
+    }
+    if(finishedStatus === "EDIT CV"){
+      setFinished(!finished);
+      setFinishedStatus('FINISH EDITING');
+      setEditGeneral(true);
+    }
   }
 
-  render(){
-    return (
-      <div>
-        <General
-          onChange = {this.handleChange}
-          editing = {this.state.editGeneral}
-          name = {this.state.name}
-          email = {this.state.email}
-          phone = {this.state.phone}
-        />
-        <Education
-          onChange = {this.handleChange}
-          schoolName = {this.state.schoolName}
-          studyTitle = {this.state.studyTitle}
-          studyStart = {this.state.studyStart}
-          studyEnd = {this.state.studyEnd}
-          education = {this.state.education}
-          submit = {this.handleEducationSubmit}
-          edit = {this.educationEdit}
-          editIndex = {this.state.educationIndex}
-          editSubmit = {this.educationEditSubmit}
-          delete = {this.educationDelete}
-          finished = {this.state.finished}
-        />
-        <Experience
-          onChange = {this.handleChange}
-          companyName = {this.state.companyName}
-          position = {this.state.position}
-          tasks = {this.state.tasks}
-          workStart = {this.state.workStart}
-          workEnd = {this.state.workEnd}
-          experience = {this.state.experience}
-          submit = {this.handleExperienceSubmit}
-          edit = {this.experienceEdit}
-          editIndex = {this.state.experienceIndex}
-          editSubmit = {this.experienceEditSubmit}
-          delete = {this.experienceDelete}
-          finished = {this.state.finished}
-        />
-        <input
-          type = "button"
-          value = {this.state.finishedStatus}
-          className = "finishEdit"
-          onClick = {this.finishToggle}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <General
+        onChange = {handleChange}
+        editing = {editGeneral}
+        name = {name}
+        email = {email}
+        phone = {phone}
+      />
+      <Education
+        onChange = {handleChange}
+        schoolName = {schoolName}
+        studyTitle = {studyTitle}
+        studyStart = {studyStart}
+        studyEnd = {studyEnd}
+        education = {education}
+        submit = {handleEducationSubmit}
+        edit = {educationEdit}
+        editIndex = {educationIndex}
+        editSubmit = {educationEditSubmit}
+        delete = {educationDelete}
+        finished = {finished}
+      />
+      <Experience
+        onChange = {handleChange}
+        companyName = {companyName}
+        position = {position}
+        tasks = {tasks}
+        workStart = {workStart}
+        workEnd = {workEnd}
+        experience = {experience}
+        submit = {handleExperienceSubmit}
+        edit = {experienceEdit}
+        editIndex = {experienceIndex}
+        editSubmit = {experienceEditSubmit}
+        delete = {experienceDelete}
+        finished = {finished}
+      />
+      <input
+        type = "button"
+        value = {finishedStatus}
+        className = "finishEdit"
+        onClick = {finishToggle}
+      />
+    </div>
+  );
 }
 
 export default App;
